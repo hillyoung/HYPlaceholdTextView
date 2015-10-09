@@ -38,7 +38,8 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                              forKeyPath:UITextViewTextDidChangeNotification];
+                                                    name:UITextViewTextDidChangeNotification
+                                                  object:nil];
 }
 
 - (void)awakeFromNib {
