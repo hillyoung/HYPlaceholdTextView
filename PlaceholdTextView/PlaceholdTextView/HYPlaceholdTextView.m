@@ -12,7 +12,8 @@
 
 @interface HYPlaceholdTextView ()
 
-@property (nonatomic ,strong) UILabel *placeholdLabel;
+@property (nonatomic, strong) UILabel *placeholdLabel;
+@property (nonatomic, strong) UILabel *wordCountLabel;
 
 @end
 
@@ -22,7 +23,10 @@
     self = [super initWithFrame:frame];
 
     if (self) {
-        [self awakeFromNib];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didChangeText)
+                                                     name:UITextViewTextDidChangeNotification
+                                                   object:self];
     }
 
     return self;
@@ -32,8 +36,15 @@
     [super layoutSubviews];
 
     CGRect rect = self.frame;
-    self.placeholdLabel.frame = CGRectMake(self.labelOriginX, self.labelOriginY, CGRectGetWidth(rect)-2*self.labelOriginX, self.font.pointSize);
+    CGFloat originX = self.labelOriginX;
+    CGFloat originY = self.labelOriginY;
+    CGFloat width = CGRectGetWidth(rect)-2*self.labelOriginX;
+    self.placeholdLabel.frame = CGRectMake(originX, originY, width, self.font.pointSize);
 
+    originY = CGRectGetHeight(rect)-originY-self.font.pointSize;
+    self.wordCountLabel.frame = CGRectMake(originX, originY, width, self.font.pointSize);
+    self.wordCountLabel.hidden = !self.wordCount;
+    [self changeWordCount];
 }
 
 - (void)dealloc {
@@ -51,6 +62,12 @@
                                                object:self];
 }
 
+#pragma mark - Private
+
+- (void)changeWordCount {
+    self.wordCountLabel.text = [@(self.text.length).stringValue stringByAppendingFormat:@"/%d", (int)self.wordCount];
+}
+
 #pragma mark - Set&&Get
 
 - (UILabel *)placeholdLabel {
@@ -63,23 +80,44 @@
     return _placeholdLabel;
 }
 
-- (void)setPlaceholdTitle:(NSString *)placeholdTitle {
-    self.placeholdLabel.text = placeholdTitle;
+- (UILabel *)wordCountLabel {
+    if (!_wordCountLabel) {
+        _wordCountLabel = [[UILabel alloc] init];
+        _wordCountLabel.textColor = [UIColor grayColor];
+        _wordCountLabel.textAlignment = NSTextAlignmentRight;
+        [self addSubview:_wordCountLabel];
+    }
+
+    return _wordCountLabel;
 }
 
-- (NSString *)placeholdTitle {
-    return self.placeholdLabel.text;
+- (void)setPlacehold:(NSString *)placehold {
+    _placehold = placehold;
+    self.placeholdLabel.text = _placehold;
 }
 
 - (void)setFont:(UIFont *)font {
     [super setFont:font];
     self.placeholdLabel.font = font;
+    self.wordCountLabel.font = font;
 }
 
 #pragma mark - Action
 
 - (void)didChangeText {
     self.placeholdLabel.hidden = self.text.length;
+
+    if (self.text.length > self.wordCount && self.wordCount) {
+
+        if (self.didExceedBlock) {
+            NSString *text = self.didExceedBlock(self.text);
+            self.text = text;
+        }
+
+        self.text = [self.text substringToIndex:self.wordCount];
+    }
+
+    [self changeWordCount];
 }
 
 @end

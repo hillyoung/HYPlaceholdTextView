@@ -22,12 +22,19 @@
 
     self.textView.font = [UIFont systemFontOfSize:12.];
     self.textView.layer.borderWidth = 1.;
-    self.textView.placeholdTitle = @"请输入反馈内容";
+    self.textView.placehold = @"请输入反馈内容";
     self.textView.delegate = self;
-    self.textView.labelOriginX = 2.;
-    self.textView.labelOriginY = 10.;
+    self.textView.didExceedBlock = ^(NSString *text){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"" delegate:nil cancelButtonTitle:@"" otherButtonTitles: nil];
+        [alertView show];
+        return text;
+    };
 
-    self.textView = [[HYPlaceholdTextView alloc] init];
+    //    self.textView.labelOriginX = 2.;
+//    self.textView.labelOriginY = 10.;
+
+//    self.textView = [[HYPlaceholdTextView alloc] init];
+
 }
 
 - (void)didReceiveMemoryWarning {

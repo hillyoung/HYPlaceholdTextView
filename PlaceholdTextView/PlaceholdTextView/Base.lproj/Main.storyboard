@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pus-a9-N6c">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pus-a9-N6c">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -13,11 +14,12 @@
                         <viewControllerLayoutGuide type="bottom" id="BoC-N4-VG5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lDE-GW-zHJ" customClass="HYPlaceholdTextView">
-                                <rect key="frame" x="10" y="70" width="580" height="200"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lDE-GW-zHJ" customClass="HYPlaceholdTextView">
+                                <rect key="frame" x="10" y="50" width="580" height="200"/>
+                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="600" id="4g2-DF-EZk"/>
@@ -26,6 +28,17 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="labelOriginX">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="labelOriginY">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="wordCount">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="4g2-DF-EZk"/>
@@ -34,6 +47,7 @@
                                 </variation>
                             </textView>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="lDE-GW-zHJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="Fq4-S4-4AW"/>
@@ -49,20 +63,21 @@
             </objects>
             <point key="canvasLocation" x="38" y="391"/>
         </scene>
-        <!--View Controller-->
+        <!--First View Controller-->
         <scene sceneID="eGh-K9-nuy">
             <objects>
-                <viewController id="tM0-YR-IvF" sceneMemberID="viewController">
+                <viewController id="tM0-YR-IvF" customClass="FirstViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zMp-i2-lbD"/>
                         <viewControllerLayoutGuide type="bottom" id="tKq-yW-GRt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="UJj-d9-KDX">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blr-Vz-Zs6">
                                 <rect key="frame" x="83" y="105" width="46" height="30"/>
+                                <animations/>
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -71,11 +86,21 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="O7k-ia-huE" appends="YES" id="GmV-Da-g7o"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="spq-0h-VL3"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JP4-1t-HvK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="O7k-ia-huE">
+                    <connections>
+                        <action selector="closeTapGesture:" destination="tM0-YR-IvF" id="a71-30-FPr"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="612" y="340"/>
         </scene>
@@ -83,9 +108,11 @@
         <scene sceneID="7hI-Sm-Yd0">
             <objects>
                 <navigationController id="pus-a9-N6c" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eVB-3L-Dbf">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="eVB-3L-Dbf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <color key="barTintColor" red="0.98039215690000003" green="0.31372549020000001" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="tM0-YR-IvF" kind="relationship" relationship="rootViewController" id="Qdq-1o-tMV"/>
