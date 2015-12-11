@@ -27,6 +27,7 @@
     self.textView.didExceedBlock = ^(NSString *text){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"" delegate:nil cancelButtonTitle:@"" otherButtonTitles: nil];
         [alertView show];
+        text = [text substringToIndex:self.textView.wordCount];
         return text;
     };
 

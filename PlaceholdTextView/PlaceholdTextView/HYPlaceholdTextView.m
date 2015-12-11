@@ -40,11 +40,13 @@
     CGFloat originY = self.labelOriginY;
     CGFloat width = CGRectGetWidth(rect)-2*self.labelOriginX;
     self.placeholdLabel.frame = CGRectMake(originX, originY, width, self.font.pointSize);
+    self.placeholdLabel.font = self.font;
 
     originY = CGRectGetHeight(rect)-originY-self.font.pointSize;
     self.wordCountLabel.frame = CGRectMake(originX, originY, width, self.font.pointSize);
     self.wordCountLabel.hidden = !self.wordCount;
-    [self changeWordCount];
+    self.wordCountLabel.font = self.font;
+    [self didChangeText];
 }
 
 - (void)dealloc {
@@ -102,6 +104,22 @@
     self.wordCountLabel.font = font;
 }
 
+- (UIFont *)font {
+    UIFont *font = [super font];
+    if (!font) {
+        font = [UIFont systemFontOfSize:14];
+    }
+
+    return font;
+}
+
+
+- (void)setText:(NSString *)text {
+    [super setText:text];
+
+    [self didChangeText];
+}
+
 #pragma mark - Action
 
 - (void)didChangeText {
@@ -111,10 +129,11 @@
 
         if (self.didExceedBlock) {
             NSString *text = self.didExceedBlock(self.text);
+            NSAssert(text.length<=self.wordCount, @"处理后的字符串超过wordCount限制");
             self.text = text;
+        } else {
+            self.text = [self.text substringToIndex:self.wordCount];
         }
-
-        self.text = [self.text substringToIndex:self.wordCount];
     }
 
     [self changeWordCount];
