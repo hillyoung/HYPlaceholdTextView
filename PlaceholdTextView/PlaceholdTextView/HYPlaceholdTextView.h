@@ -20,6 +20,11 @@
 @property (nonatomic) IBInspectable NSUInteger wordCount;
 
 /**
+ placehold的字体大小
+ */
+@property (strong, nonatomic) UIFont *placeholdFont;
+
+/**
  *@return 获取默认文字label
  **/
 - (UILabel *)placeholdLabel;

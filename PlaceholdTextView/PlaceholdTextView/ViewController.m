@@ -22,7 +22,7 @@
 
     self.textView.font = [UIFont systemFontOfSize:12.];
     self.textView.layer.borderWidth = 1.;
-    self.textView.placehold = @"请输入反馈内容";
+    self.textView.placehold = @"请输入反馈内容是服务器,下面还有一个spark,这个是一个XMPP协议通信聊天的CS的IM软件,它可以";
     self.textView.delegate = self;
     self.textView.didExceedBlock = ^(NSString *text){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"" delegate:nil cancelButtonTitle:@"" otherButtonTitles: nil];

@@ -39,9 +39,9 @@
     CGFloat originX = self.labelOriginX;
     CGFloat originY = self.labelOriginY;
     CGFloat width = CGRectGetWidth(rect)-2*self.labelOriginX;
-    self.placeholdLabel.frame = CGRectMake(originX, originY, width, self.font.pointSize);
-    self.placeholdLabel.font = self.font;
-
+    CGFloat height = [self.placehold boundingRectWithSize:CGSizeMake(width, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.font} context:nil].size.height;
+    self.placeholdLabel.frame = CGRectMake(originX, originY, width, height);
+    self.placeholdLabel.font = self.placeholdFont? self.placeholdFont:self.font;
     originY = CGRectGetHeight(rect)-originY-self.font.pointSize;
     self.wordCountLabel.frame = CGRectMake(originX, originY, width, self.font.pointSize);
     self.wordCountLabel.hidden = !self.wordCount;
@@ -76,6 +76,8 @@
     if (!_placeholdLabel) {
         _placeholdLabel = [[UILabel alloc] init];
         _placeholdLabel.textColor = [UIColor grayColor];
+        _placeholdLabel.numberOfLines = 0;
+        _placeholdLabel.lineBreakMode = NSLineBreakByCharWrapping;
         [self addSubview:_placeholdLabel];
     }
 
@@ -95,7 +97,12 @@
 
 - (void)setPlacehold:(NSString *)placehold {
     _placehold = placehold;
+
+    CGRect rect = self.placeholdLabel.frame;
+    CGFloat height = [self.placehold boundingRectWithSize:CGSizeMake(CGRectGetWidth(rect), CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.font} context:nil].size.height;
     self.placeholdLabel.text = _placehold;
+    rect.size.height = height;
+    self.placeholdLabel.frame = rect;
 }
 
 - (void)setFont:(UIFont *)font {
