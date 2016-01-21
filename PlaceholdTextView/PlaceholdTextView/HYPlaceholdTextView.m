@@ -39,9 +39,12 @@
     CGFloat originX = self.labelOriginX;
     CGFloat originY = self.labelOriginY;
     CGFloat width = CGRectGetWidth(rect)-2*self.labelOriginX;
-    CGFloat height = [self.placehold boundingRectWithSize:CGSizeMake(width, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.font} context:nil].size.height;
-    self.placeholdLabel.frame = CGRectMake(originX, originY, width, height);
+
     self.placeholdLabel.font = self.placeholdFont? self.placeholdFont:self.font;
+
+    CGFloat height = [self.placehold boundingRectWithSize:CGSizeMake(width, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.placeholdLabel.font} context:nil].size.height;
+    self.placeholdLabel.frame = CGRectMake(originX, originY, width, height);
+
     originY = CGRectGetHeight(rect)-originY-self.font.pointSize;
     self.wordCountLabel.frame = CGRectMake(originX, originY, width, self.font.pointSize);
     self.wordCountLabel.hidden = !self.wordCount;
